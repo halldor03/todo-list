@@ -1,0 +1,40 @@
+/* to show boxes */
+/* * {
+  border: 1px black solid;
+} */
+
+/* simple reset */
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+#content {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 10fr;
+  grid-template-columns: 1fr 5fr;
+  grid-template-areas:
+    "header header"
+    "sidebar main";
+}
+
+header {
+  grid-area: header;
+  background-color: #3d81a3;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: #33617f;
+}
+
+main {
+  grid-area: main;
+  background-color: #376e90;
+}
