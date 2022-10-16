@@ -14,6 +14,12 @@
   color: white;
 }
 
+button {
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+}
+
 .material-symbols-outlined {
   font-size: 1.75rem;
   user-select: none;
@@ -23,7 +29,7 @@
 #content {
   height: 100vh;
   display: grid;
-  grid-template-rows: 1fr 12fr;
+  grid-template-rows: 5rem 10fr;
   grid-template-columns: 1fr 4fr;
   grid-template-areas:
     "header header"
@@ -54,6 +60,7 @@ header > .material-symbols-outlined {
   display: flex;
   flex-direction: column;
   min-width: max-content;
+  padding-bottom: 2rem;
 }
 
 .sidebarHeader {
@@ -80,7 +87,7 @@ header > .material-symbols-outlined {
 .task {
   height: 2.5rem;
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
   border-radius: 0.5rem;
   padding: 0.5rem;
@@ -103,7 +110,7 @@ header > .material-symbols-outlined {
   cursor: pointer;
 }
 
-#addNewTask {
+#addTaskInput {
   appearance: none;
   font-family: inherit;
   font-size: inherit;
@@ -174,7 +181,7 @@ main {
   cursor: pointer;
 }
 
-#addNewActivity {
+#addActivityInput {
   appearance: none;
   font-family: inherit;
   font-size: inherit;

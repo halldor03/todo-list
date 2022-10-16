@@ -39,30 +39,23 @@ const createHome = (() => {
     tasks.setAttribute("id", "tasks");
     sidebar.appendChild(tasks);
 
-    const task = document.createElement("div");
-    task.classList.add("task");
-    task.innerText = "Sample task nr 1";
-    tasks.appendChild(task);
-
-    const task2 = document.createElement("div");
-    task2.classList.add("task");
-    task2.innerText = "Sample task nr 2";
-    tasks.appendChild(task2);
-
-    const modifyingTasks = document.createElement("div");
+    const modifyingTasks = document.createElement("form");
     modifyingTasks.classList.add("modifyingTasks");
     sidebar.appendChild(modifyingTasks);
 
     const addTaskInput = document.createElement("input");
     addTaskInput.setAttribute("type", "text");
-    addTaskInput.setAttribute("name", "addNewTask");
-    addTaskInput.setAttribute("id", "addNewTask");
+    addTaskInput.setAttribute("name", "addTaskInput");
+    addTaskInput.setAttribute("id", "addTaskInput");
     addTaskInput.setAttribute("placeholder", "Add new task");
     addTaskInput.setAttribute("maxlength", "25");
+    addTaskInput.setAttribute("autocomplete", "off");
     modifyingTasks.appendChild(addTaskInput);
 
-    const addTaskLogo = document.createElement("span");
+    const addTaskLogo = document.createElement("button");
     addTaskLogo.classList.add("material-symbols-outlined");
+    addTaskLogo.setAttribute("type", "reset");
+    addTaskLogo.classList.add("addTask");
     addTaskLogo.innerText = "add";
     modifyingTasks.appendChild(addTaskLogo);
   };
@@ -80,19 +73,21 @@ const createHome = (() => {
     activityTitle.innerText = "Sample task nr 1";
     taskCard.appendChild(activityTitle);
 
-    const modifyingActivity = document.createElement("div");
+    const modifyingActivity = document.createElement("form");
     modifyingActivity.classList.add("modifyingActivity");
     taskCard.appendChild(modifyingActivity);
 
     const addActivityInput = document.createElement("input");
     addActivityInput.setAttribute("type", "text");
-    addActivityInput.setAttribute("name", "addNewActivity");
-    addActivityInput.setAttribute("id", "addNewActivity");
+    addActivityInput.setAttribute("name", "addActivityInput");
+    addActivityInput.setAttribute("id", "addActivityInput");
     addActivityInput.setAttribute("placeholder", "Add new activity");
+    addActivityInput.setAttribute("autocomplete", "off");
     modifyingActivity.appendChild(addActivityInput);
 
-    const addActivityLogo = document.createElement("span");
+    const addActivityLogo = document.createElement("button");
     addActivityLogo.classList.add("material-symbols-outlined");
+    addActivityLogo.setAttribute("type", "reset");
     addActivityLogo.innerText = "add";
     modifyingActivity.appendChild(addActivityLogo);
 

@@ -1,8 +1,11 @@
 import "./styles.css";
 import { createHome } from "./createHome";
-import { DOMmanipulation } from "./manipulation";
+import { tasksMethods } from "./tasks";
+import { manipulateDOM } from "./manipulateDOM";
 
 createHome.createHeader();
 createHome.createSidebar();
 createHome.createMain();
-DOMmanipulation.selectTask();
+tasksMethods.addSampleTask();
+tasksMethods.addToArray();
+manipulateDOM.addTask();
