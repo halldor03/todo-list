@@ -50,6 +50,7 @@ const createHome = (() => {
     addTaskInput.setAttribute("placeholder", "Add new task");
     addTaskInput.setAttribute("maxlength", "25");
     addTaskInput.setAttribute("autocomplete", "off");
+    addTaskInput.setAttribute("spellcheck", "false");
     modifyingTasks.appendChild(addTaskInput);
 
     const addTaskLogo = document.createElement("button");
@@ -83,6 +84,7 @@ const createHome = (() => {
     addActivityInput.setAttribute("id", "addActivityInput");
     addActivityInput.setAttribute("placeholder", "Add new activity");
     addActivityInput.setAttribute("autocomplete", "off");
+    addActivityInput.setAttribute("spellcheck", "false");
     modifyingActivity.appendChild(addActivityInput);
 
     const addActivityLogo = document.createElement("button");

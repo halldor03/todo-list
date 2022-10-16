@@ -8,13 +8,15 @@ const manipulateDOM = (() => {
       element.remove();
     });
   };
-  const addTask = () => {
+  const addTasks = () => {
     tasksArray.forEach((element) => {
       const createTask = document.createElement("div");
       createTask.classList.add("task");
       if (element.name === "") {
         createTask.innerText = "Unnamed task";
       } else createTask.innerText = element.name;
+      // console.log("Test:" + element.isActive);
+      activeTask(element, createTask);
       tasks.appendChild(createTask);
     });
     taskShowDelete();
@@ -22,16 +24,14 @@ const manipulateDOM = (() => {
 
   const taskShowDelete = () => {
     const tasks = document.querySelectorAll(".task");
-    tasks.forEach((element) => {
+    tasks.forEach((element, index) => {
       element.addEventListener("mouseenter", () => {
         const deleteIcon = document.createElement("span");
         deleteIcon.classList.add("material-symbols-outlined");
         deleteIcon.setAttribute("id", "deleteTask");
         deleteIcon.innerText = "delete";
         element.appendChild(deleteIcon);
-        deleteIcon.addEventListener("click", () =>
-          tasksMethods.removeFromArray()
-        );
+        tasksMethods.removeFromArray(index);
       });
     });
     tasks.forEach((element) => {
@@ -41,7 +41,13 @@ const manipulateDOM = (() => {
       });
     });
   };
-  return { refreshTasks, addTask };
+
+  const activeTask = (element, createTask) => {
+    if (element.isActive === true) {
+      createTask.classList.add("task_active");
+    }
+  };
+  return { refreshTasks, addTasks };
 })();
 
 export { manipulateDOM };

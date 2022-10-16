@@ -8,4 +8,5 @@ createHome.createSidebar();
 createHome.createMain();
 tasksMethods.addSampleTask();
 tasksMethods.addToArray();
-manipulateDOM.addTask();
+manipulateDOM.addTasks();
+// tasksMethods.makeActive();

@@ -101,13 +101,6 @@ header > .material-symbols-outlined {
 
 .task_active {
   background-color: #35566b;
-  height: 2.5rem;
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  cursor: pointer;
 }
 
 #addTaskInput {
@@ -140,6 +133,7 @@ header > .material-symbols-outlined {
 
 .modifyingTasks > .material-symbols-outlined {
   cursor: pointer;
+  margin-right: 0.5rem;
 }
 
 main {
