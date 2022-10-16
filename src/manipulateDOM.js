@@ -15,8 +15,9 @@ const manipulateDOM = (() => {
       if (element.name === "") {
         createTask.innerText = "Unnamed task";
       } else createTask.innerText = element.name;
-      // console.log("Test:" + element.isActive);
-      activeTask(element, createTask);
+      if (element.isActive === true) {
+        createTask.classList.add("task_active");
+      }
       tasks.appendChild(createTask);
     });
     taskShowDelete();
@@ -42,11 +43,6 @@ const manipulateDOM = (() => {
     });
   };
 
-  const activeTask = (element, createTask) => {
-    if (element.isActive === true) {
-      createTask.classList.add("task_active");
-    }
-  };
   return { refreshTasks, addTasks };
 })();
 

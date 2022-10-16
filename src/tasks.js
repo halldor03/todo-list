@@ -9,12 +9,12 @@ class task {
 }
 
 const tasksMethods = (() => {
-  const addSampleTask = () => {
-    const sampleTask = new task("Sample task", true);
-    tasksArray.push(sampleTask);
-    manipulateDOM.refreshTasks();
-    console.log(tasksArray);
-  };
+  // const addSampleTask = () => {
+  //   const sampleTask = new task("Sample task", true);
+  //   tasksArray.push(sampleTask);
+  //   manipulateDOM.refreshTasks();
+  //   // console.log(tasksArray);
+  // };
 
   const addToArray = () => {
     // BEHAVIOUR FOR PRESSING PLUS ICON
@@ -22,10 +22,10 @@ const tasksMethods = (() => {
     addButton.addEventListener("click", () => {
       let newTask = new task(addTaskInput.value, false);
       tasksArray.push(newTask);
-      // makeActive();
       manipulateDOM.refreshTasks();
       manipulateDOM.addTasks();
-      console.log(tasksArray);
+      makeActive();
+      // console.log(tasksArray);
     });
 
     // BEHAVIOUR FOR PRESSING ENTER
@@ -35,11 +35,11 @@ const tasksMethods = (() => {
         e.preventDefault();
         let newTask = new task(addTaskInput.value, false);
         tasksArray.push(newTask);
-        // makeActive();
         manipulateDOM.refreshTasks();
         manipulateDOM.addTasks();
         addTaskInput.value = null;
-        console.log(tasksArray);
+        makeActive();
+        // console.log(tasksArray);
       }
     });
   };
@@ -48,22 +48,29 @@ const tasksMethods = (() => {
     const deleteIcon = document.getElementById("deleteTask");
     deleteIcon.addEventListener("click", () => {
       tasksArray.splice(index, 1);
+      tasksArray.forEach((element) => {
+        element.isActive = false;
+      });
       manipulateDOM.refreshTasks();
       manipulateDOM.addTasks();
     });
   };
 
-  // const makeActive = () => {
-  //   const tasks = document.querySelectorAll(".task");
-  //   tasks.forEach((element, index) => {
-  //     element.addEventListener("click", () => {
-  //       tasksArray[index].isActive = true;
-  //       console.log(tasksArray);
-  //       manipulateDOM.activeTask();
-  //     });
-  //   });
-  // };
-  return { addToArray, addSampleTask, removeFromArray };
+  const makeActive = () => {
+    const tasks = document.querySelectorAll(".task");
+    tasks.forEach((element, index) => {
+      element.addEventListener("click", () => {
+        tasksArray.forEach((element) => {
+          element.isActive = false;
+        });
+        tasksArray[index].isActive = true;
+        manipulateDOM.refreshTasks();
+        manipulateDOM.addTasks();
+        makeActive();
+      });
+    });
+  };
+  return { addToArray, removeFromArray, makeActive };
 })();
 
 export { tasksMethods };
