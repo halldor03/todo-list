@@ -80,11 +80,11 @@ header > .material-symbols-outlined {
   font-size: 1.5rem;
 }
 
-#tasks {
+#projects {
   margin: 0 1rem 1rem 1rem;
 }
 
-.task {
+.project {
   height: 2.5rem;
   display: flex;
   justify-content: space-between;
@@ -94,16 +94,16 @@ header > .material-symbols-outlined {
   cursor: pointer;
 }
 
-.task:hover {
+.project:hover {
   background-color: #35566b;
   transition: 0.4s;
 }
 
-.task_active {
+.project_active {
   background-color: #35566b;
 }
 
-#addTaskInput {
+#addProjectInput {
   appearance: none;
   font-family: inherit;
   font-size: inherit;
@@ -124,14 +124,14 @@ header > .material-symbols-outlined {
   color: rgb(167, 167, 167);
 }
 
-.modifyingTasks {
+.modifyingProjects {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0 1rem 0 1rem;
 }
 
-.modifyingTasks > .material-symbols-outlined {
+.modifyingProjects > .material-symbols-outlined {
   cursor: pointer;
   margin-right: 0.5rem;
 }
@@ -144,7 +144,12 @@ main {
   justify-content: center;
 }
 
-.taskCard {
+.selectProjectDiv {
+  padding-top: 2rem;
+  font-size: 1.5rem;
+}
+
+.projectCard {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -154,7 +159,7 @@ main {
   border-radius: 1rem;
 }
 
-.activityTitle {
+.taskTitle {
   display: flex;
   align-items: center;
   font-size: 1.5rem;
@@ -163,7 +168,7 @@ main {
   margin-bottom: 1rem;
 }
 
-.modifyingActivity {
+.modifyingTask {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -171,11 +176,11 @@ main {
   padding-right: 0.5rem;
 }
 
-.modifyingActivity > .material-symbols-outlined {
+.modifyingTask > .material-symbols-outlined {
   cursor: pointer;
 }
 
-#addActivityInput {
+#addTaskInput {
   appearance: none;
   font-family: inherit;
   font-size: inherit;
@@ -192,11 +197,11 @@ main {
   margin-right: 1rem;
 }
 
-#activities {
+#tasks {
   margin-top: 1rem;
 }
 
-.activity {
+.task {
   height: 2.5rem;
   display: flex;
   justify-content: space-between;
@@ -206,11 +211,11 @@ main {
   padding: 0.5rem;
 }
 
-.activity:hover {
+.task:hover {
   background-color: #5a8098;
   transition: 0.4s;
 }
 
-.activity_active {
+.task_active {
   background-color: #5a8098;
 }

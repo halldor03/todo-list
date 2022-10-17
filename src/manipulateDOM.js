@@ -1,49 +1,81 @@
-import { tasksArray } from "./tasks";
-import { tasksMethods } from "./tasks";
+import { projectsArray } from "./logic";
+import { logic } from "./logic";
 
 const manipulateDOM = (() => {
-  const refreshTasks = () => {
-    const tasks = document.querySelectorAll(".task");
-    tasks.forEach((element) => {
+  const refreshProjects = () => {
+    const projects = document.querySelectorAll(".project");
+    projects.forEach((element) => {
       element.remove();
     });
   };
-  const addTasks = () => {
-    tasksArray.forEach((element) => {
-      const createTask = document.createElement("div");
-      createTask.classList.add("task");
+  const addProjects = () => {
+    projectsArray.forEach((element, index) => {
+      const createProject = document.createElement("div");
+      createProject.classList.add("project");
       if (element.name === "") {
-        createTask.innerText = "Unnamed task";
-      } else createTask.innerText = element.name;
-      if (element.isActive === true) {
-        createTask.classList.add("task_active");
+        createProject.innerText = "Unnamed project";
+      } else createProject.innerText = element.name;
+      if (element.isActive) {
+        createProject.classList.add("project_active");
+        projectShowTitle(projectsArray[index]);
       }
-      tasks.appendChild(createTask);
+      projects.appendChild(createProject);
     });
-    taskShowDelete();
+    projectsShowDelete();
   };
 
-  const taskShowDelete = () => {
-    const tasks = document.querySelectorAll(".task");
-    tasks.forEach((element, index) => {
+  const projectsShowDelete = () => {
+    const projects = document.querySelectorAll(".project");
+    projects.forEach((element, index) => {
       element.addEventListener("mouseenter", () => {
         const deleteIcon = document.createElement("span");
         deleteIcon.classList.add("material-symbols-outlined");
-        deleteIcon.setAttribute("id", "deleteTask");
+        deleteIcon.setAttribute("id", "deleteProject");
         deleteIcon.innerText = "delete";
         element.appendChild(deleteIcon);
-        tasksMethods.removeFromArray(index);
+        logic.removeFromArray(index);
       });
     });
-    tasks.forEach((element) => {
+    projects.forEach((element) => {
       element.addEventListener("mouseleave", () => {
-        const deleteIcon = document.getElementById("deleteTask");
+        const deleteIcon = document.getElementById("deleteProject");
         deleteIcon.remove();
       });
     });
   };
 
-  return { refreshTasks, addTasks };
+  const noActiveProjectsCard = () => {
+    const activeProjects = document.querySelectorAll(".project_active");
+    const projectCard = document.querySelector(".projectCard");
+    const main = document.querySelector("main");
+    if (activeProjects.length === 0) {
+      projectCard.remove();
+      const selectProjectDiv = document.createElement("div");
+      selectProjectDiv.setAttribute("class", "selectProjectDiv");
+      selectProjectDiv.innerText =
+        "Please select an active project from the list";
+      main.appendChild(selectProjectDiv);
+    }
+  };
+
+  const projectShowTitle = (element) => {
+    // console.log(element);
+    // createHome.createMain();
+    const titleElement = document.querySelector(".taskTitle");
+    const title = element.name;
+    console.log(title);
+    titleElement.innerText = title;
+    if (title === "") {
+      titleElement.innerText = "Unnamed project";
+    }
+  };
+
+  return {
+    refreshProjects,
+    addProjects,
+    projectShowTitle,
+    noActiveProjectsCard,
+  };
 })();
 
 export { manipulateDOM };

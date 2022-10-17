@@ -1,12 +1,10 @@
 import "./styles.css";
-import { createHome } from "./createHome";
-import { tasksMethods } from "./tasks";
-import { manipulateDOM } from "./manipulateDOM";
+import { createDOM } from "./createDOM";
+import { logic } from "./logic";
 
-createHome.createHeader();
-createHome.createSidebar();
-createHome.createMain();
-// tasksMethods.addSampleTask();
-tasksMethods.addToArray();
-manipulateDOM.addTasks();
-tasksMethods.makeActive();
+createDOM.createHeader();
+createDOM.createSidebar();
+createDOM.createMain();
+logic.addSampleProject();
+logic.addToArray();
+logic.makeActive();
