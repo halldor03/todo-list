@@ -44,20 +44,20 @@ const logic = (() => {
     manipulateDOM.addProjects();
   };
 
-  const addToArray = () => {
+  const addProjectToArray = () => {
     // BEHAVIOUR FOR PRESSING PLUS ICON
+    const projectInput = document.getElementById("addProjectInput");
     const addButton = document.querySelector(".addProject");
     addButton.addEventListener("click", () => {
-      let newProject = new projectClass(addProjectInput.value, false, []);
+      let newProject = new projectClass(projectInput.value, false, []);
       projectsArray.push(newProject);
       manipulateDOM.refreshProjects();
       manipulateDOM.addProjects();
-      makeActive();
+      projectMakeActive();
       // console.table(projectsArray);
     });
 
     // BEHAVIOUR FOR PRESSING ENTER
-    const projectInput = document.getElementById("addProjectInput");
     projectInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
@@ -66,13 +66,13 @@ const logic = (() => {
         manipulateDOM.refreshProjects();
         manipulateDOM.addProjects();
         projectInput.value = null;
-        makeActive();
+        projectMakeActive();
         // console.table(projectsArray);
       }
     });
   };
 
-  const removeFromArray = (index) => {
+  const removeProjectFromArray = (index) => {
     const deleteIcon = document.getElementById("deleteProject");
     deleteIcon.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -84,12 +84,12 @@ const logic = (() => {
       projectsArray.splice(index, 1);
       manipulateDOM.refreshProjects();
       manipulateDOM.addProjects();
-      manipulateDOM.noActiveProjectsCard();
-      makeActive();
+      // manipulateDOM.noActiveProjectsCard();
+      projectMakeActive();
     });
   };
 
-  const makeActive = () => {
+  const projectMakeActive = () => {
     const projects = document.querySelectorAll(".project");
     projects.forEach((element, index) => {
       element.addEventListener("click", () => {
@@ -97,15 +97,100 @@ const logic = (() => {
           el.isActive = false;
         });
         projectsArray[index].isActive = true;
+        // addTaskToArray(projectsArray[index]);
         manipulateDOM.refreshProjects();
         manipulateDOM.addProjects();
         // console.table(projectsArray);
         // manipulateDOM.activitiesShowTitle(projectsArray[index]);
-        makeActive();
+        addTaskToArray();
+        projectMakeActive();
       });
+      // addTaskToArray(projectsArray[index]);
     });
   };
-  return { addToArray, removeFromArray, makeActive, addSampleProject };
+
+  const addTaskToArray = () => {
+    const activeProject = projectsArray.find(
+      (element) => element.isActive === true
+    );
+    const tasksArray = activeProject.tasks;
+    console.log(tasksArray);
+
+    manipulateDOM.refreshTasks();
+    manipulateDOM.addTasks(activeProject);
+
+    // BEHAVIOUR FOR PRESSING PLUS ICON
+    const taskInput = document.getElementById("addTaskInput");
+    const addButton = document.querySelector(".addTask");
+    addButton.addEventListener("click", () => {
+      let newTask = taskInput.value;
+      tasksArray.push(newTask);
+      manipulateDOM.refreshTasks();
+      manipulateDOM.addTasks(activeProject);
+      addTaskToArray();
+      // manipulateDOM.refreshProjects();
+      // manipulateDOM.addProjects();
+      console.log(tasksArray);
+    });
+
+    // BEHAVIOUR FOR PRESSING ENTER
+    taskInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        let newTask = taskInput.value;
+        tasksArray.push(newTask);
+        manipulateDOM.refreshTasks();
+        manipulateDOM.addTasks(activeProject);
+        addTaskToArray();
+        // manipulateDOM.refreshProjects();
+        // manipulateDOM.addProjects();
+        taskInput.value = null;
+        console.log(tasksArray);
+      }
+    });
+
+    // const projects = document.querySelectorAll(".project");
+    // projects.forEach((element) => {
+    //   element.addEventListener(
+    //     "click",
+    //     () => {
+    //       addTaskToArray();
+    //     },
+    //     { once: true }
+    //   );
+    // });
+  };
+
+  const removeTaskFromArray = (index) => {
+    const activeProject = projectsArray.find(
+      (element) => element.isActive === true
+    );
+    const tasksArray = activeProject.tasks;
+    console.log(tasksArray);
+
+    const deleteIcon = document.getElementById("deleteProject");
+    deleteIcon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      // if (projectsArray[index].isActive) {
+      //   projectsArray.forEach((element) => {
+      //     element.isActive = false;
+      //   });
+      // }
+      tasksArray.splice(index, 1);
+      manipulateDOM.refreshTasks();
+      manipulateDOM.addTasks(activeProject);
+      // manipulateDOM.noActiveProjectsCard();
+      addTaskToArray();
+    });
+  };
+  return {
+    addProjectToArray,
+    removeProjectFromArray,
+    projectMakeActive,
+    addSampleProject,
+    addTaskToArray,
+    removeTaskFromArray,
+  };
 })();
 
 export { logic };
