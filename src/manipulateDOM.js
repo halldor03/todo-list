@@ -10,36 +10,35 @@ const manipulateDOM = (() => {
     });
   };
   const addProjects = () => {
-    projectsArray.forEach((element, index) => {
+    projectsArray.forEach((projectInArray) => {
       const projects = document.querySelector("#projects");
       const createProject = document.createElement("div");
       createProject.classList.add("project");
-      if (element.name === "") {
+      if (projectInArray.name === "") {
         createProject.innerText = "Unnamed project";
-      } else createProject.innerText = element.name;
+      } else createProject.innerText = projectInArray.name;
       projects.appendChild(createProject);
-      if (element.isActive) {
+      // SET CLASS TO ACTIVE IF PROJECT IS ACTIVE
+      if (projectInArray.isActive) {
         createProject.classList.add("project_active");
-        // addTasks(projectsArray[index]);
       }
     });
+    // DISPLAY MESSAGE IF NO PROJECT IS ACTIVE (THE SECOND PART IN THE "IF STATEMENT" PREVENTS FROM TRYING TO DELETE PROJECT CARD WHEN IT WAS REMOVED BEFORE)
     const activeProject = document.querySelector(".project_active");
-    if (activeProject === null) {
+    const projectCard = document.querySelector(".projectCard");
+    if (activeProject === null && projectCard !== null) {
       noActiveProjects();
     }
-    projectsShowDelete();
-    // console.log(activeProject.name);
-    // logic.addTaskToArray();
-    const projectInput = document.getElementById("addProjectInput");
+    displayProjectDeleteButtons();
   };
 
-  const projectsShowDelete = () => {
+  const displayProjectDeleteButtons = () => {
     const projects = document.querySelectorAll(".project");
     projects.forEach((element, index) => {
       element.addEventListener("mouseenter", () => {
         const deleteIcon = document.createElement("span");
         deleteIcon.classList.add("material-symbols-outlined");
-        deleteIcon.setAttribute("id", "deleteProject");
+        deleteIcon.setAttribute("id", "deleteIcon");
         deleteIcon.innerText = "delete";
         element.appendChild(deleteIcon);
         logic.removeProjectFromArray(index);
@@ -47,7 +46,7 @@ const manipulateDOM = (() => {
     });
     projects.forEach((element) => {
       element.addEventListener("mouseleave", () => {
-        const deleteIcon = document.getElementById("deleteProject");
+        const deleteIcon = document.getElementById("deleteIcon");
         deleteIcon.remove();
       });
     });
@@ -56,32 +55,23 @@ const manipulateDOM = (() => {
   const noActiveProjects = () => {
     const projectCard = document.querySelector(".projectCard");
     const main = document.querySelector("main");
-    if (projectCard !== null) {
-      projectCard.remove();
-      const selectProjectDiv = document.createElement("div");
-      selectProjectDiv.setAttribute("class", "selectProjectDiv");
-      selectProjectDiv.innerText =
-        "Please select an active project from the list";
-      main.appendChild(selectProjectDiv);
-    }
+    projectCard.remove();
+    const selectProjectDiv = document.createElement("div");
+    selectProjectDiv.setAttribute("class", "selectProjectDiv");
+    selectProjectDiv.innerText =
+      "Please select an active project from the list";
+    main.appendChild(selectProjectDiv);
   };
 
   const addTasks = (activeProject) => {
-    const projectCard = document.querySelector(".projectCard");
-    // if (projectCard === null) {
-    //   const selectProjectDiv = document.querySelector(".selectProjectDiv");
-    //   selectProjectDiv.remove();
-    //   createDOM.createCard();
-    // }
     createDOM.createCard();
     const taskInput = document.getElementById("addTaskInput");
-    taskInput.focus();
+    taskInput.focus(); // IN ORDER TO FOCUS ON INPUT EACH TIME TASK IS ADDED/PROJECT IS CHANGED
     const titleElement = document.querySelector(".projectTitle");
     titleElement.innerText = activeProject.name;
     if (activeProject.name === "") {
       titleElement.innerText = "Unnamed project";
     }
-    // refreshTasks();
     const activeProjectTaks = activeProject.tasks;
     const tasks = document.querySelector("#tasks");
     activeProjectTaks.forEach((element) => {
@@ -92,31 +82,29 @@ const manipulateDOM = (() => {
       } else createTask.innerText = element;
       tasks.appendChild(createTask);
     });
-    tasksShowDelete();
+    displayTasksDeleteButtons();
   };
 
   const refreshTasks = () => {
     const selectProjectDiv = document.querySelector(".selectProjectDiv");
+    // REMOVE THE MESSAGE THAT NO PROJECT IS ACTIVE IF IT EXISTS
     if (selectProjectDiv !== null) {
       selectProjectDiv.remove();
     }
     const projectCard = document.querySelector(".projectCard");
+    // REMOVE PROJECT CARD IF IT EXISTS - IT WILL BE ADDED IN "ADDTASKS" FUNCTION
     if (projectCard !== null) {
       projectCard.remove();
     }
-    // const tasks = document.querySelectorAll(".task");
-    // tasks.forEach((element) => {
-    //   element.remove();
-    // });
   };
 
-  const tasksShowDelete = () => {
+  const displayTasksDeleteButtons = () => {
     const tasks = document.querySelectorAll(".task");
     tasks.forEach((element, index) => {
       element.addEventListener("mouseenter", () => {
         const deleteIcon = document.createElement("span");
         deleteIcon.classList.add("material-symbols-outlined");
-        deleteIcon.setAttribute("id", "deleteProject");
+        deleteIcon.setAttribute("id", "deleteIcon");
         deleteIcon.innerText = "delete";
         element.appendChild(deleteIcon);
         logic.removeTaskFromArray(index);
@@ -124,7 +112,7 @@ const manipulateDOM = (() => {
     });
     tasks.forEach((element) => {
       element.addEventListener("mouseleave", () => {
-        const deleteIcon = document.getElementById("deleteProject");
+        const deleteIcon = document.getElementById("deleteIcon");
         deleteIcon.remove();
       });
     });

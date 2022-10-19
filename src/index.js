@@ -1,12 +1,13 @@
 import "./styles.css";
 import { createDOM } from "./createDOM";
 import { logic } from "./logic";
+import { manipulateDOM } from "./manipulateDOM";
 
 createDOM.createHeader();
 createDOM.createSidebar();
 createDOM.createMain();
 createDOM.createCard();
 logic.addProjectToArray();
-logic.addSampleProject();
-logic.projectMakeActive();
-logic.addTaskToArray();
+logic.findActiveProject();
+manipulateDOM.addProjects();
+logic.activateProjectSelection();

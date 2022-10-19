@@ -5,20 +5,32 @@ const projectsArray = [
     name: "Clean the house",
     isActive: true,
     tasks: [
-      "make a bed",
-      "wash the dishes",
-      "vacuum the room",
-      "clean the windows",
+      "Make a bed",
+      "Wash the dishes",
+      "Vacuum the room",
+      "Clean the windows",
     ],
   },
   {
     name: "Study for school",
     isActive: false,
     tasks: [
-      "study for physics quiz",
-      "study for biology quiz",
-      "do the homework",
-      "chill afterwards",
+      "Study for physics quiz",
+      "Study for biology quiz",
+      "Do the homework",
+      "Chill afterwards",
+    ],
+  },
+  {
+    name: "Buy groceries",
+    isActive: false,
+    tasks: [
+      "2 carrots",
+      "3 tomatoes",
+      "1 banana",
+      "4 avocado",
+      "1 kiwi",
+      "2 apples",
     ],
   },
 ];
@@ -32,16 +44,12 @@ class projectClass {
 }
 
 const logic = (() => {
-  const addSampleProject = () => {
-    const sampleProject = new projectClass("Buy groceries", false, [
-      "2 carrots",
-      "3 tomatoes",
-      "1 banana",
-      "4 avocado",
-      "1 kiwi",
-    ]);
-    projectsArray.push(sampleProject);
-    manipulateDOM.addProjects();
+  // FIND ACTIVE PROJECT ON LAUNCH
+  const findActiveProject = () => {
+    const activeProject = projectsArray.find(
+      (element) => element.isActive === true
+    );
+    addTaskToArray(activeProject); // POPULATE TASKS OF ACTIVE PROJECT ON START
   };
 
   const addProjectToArray = () => {
@@ -53,8 +61,7 @@ const logic = (() => {
       projectsArray.push(newProject);
       manipulateDOM.refreshProjects();
       manipulateDOM.addProjects();
-      projectMakeActive();
-      // console.table(projectsArray);
+      activateProjectSelection();
     });
 
     // BEHAVIOUR FOR PRESSING ENTER
@@ -66,56 +73,41 @@ const logic = (() => {
         manipulateDOM.refreshProjects();
         manipulateDOM.addProjects();
         projectInput.value = null;
-        projectMakeActive();
-        // console.table(projectsArray);
+        activateProjectSelection();
       }
     });
   };
 
   const removeProjectFromArray = (index) => {
-    const deleteIcon = document.getElementById("deleteProject");
+    const deleteIcon = document.getElementById("deleteIcon");
     deleteIcon.addEventListener("click", (e) => {
-      e.stopPropagation();
-      // if (projectsArray[index].isActive) {
-      //   projectsArray.forEach((element) => {
-      //     element.isActive = false;
-      //   });
-      // }
+      e.stopPropagation(); // STOPS PROJECT FROM BEING SET AS ACTIVE AFTER BEING DELETED
       projectsArray.splice(index, 1);
       manipulateDOM.refreshProjects();
       manipulateDOM.addProjects();
-      // manipulateDOM.noActiveProjectsCard();
-      projectMakeActive();
+      activateProjectSelection();
     });
   };
 
-  const projectMakeActive = () => {
+  const activateProjectSelection = () => {
     const projects = document.querySelectorAll(".project");
     projects.forEach((element, index) => {
       element.addEventListener("click", () => {
-        projectsArray.forEach((el) => {
-          el.isActive = false;
+        // DEACTIVATE ALL PROJECTS
+        projectsArray.forEach((projectInArray) => {
+          projectInArray.isActive = false;
         });
-        projectsArray[index].isActive = true;
-        // addTaskToArray(projectsArray[index]);
+        projectsArray[index].isActive = true; // ACTIVATE ONLY CLICKED PROJECT
         manipulateDOM.refreshProjects();
         manipulateDOM.addProjects();
-        // console.table(projectsArray);
-        // manipulateDOM.activitiesShowTitle(projectsArray[index]);
-        addTaskToArray();
-        projectMakeActive();
+        addTaskToArray(projectsArray[index]); // POPULATE TASKS OF ACTIVE PROJECT EVERY TIME NEW PROJECT IS SELECTED
+        activateProjectSelection(); // IN ORDER TO RUN FUNCTION MORE THAN ONCE BEFORE ADDING NEW PROJECT
       });
-      // addTaskToArray(projectsArray[index]);
     });
   };
 
-  const addTaskToArray = () => {
-    const activeProject = projectsArray.find(
-      (element) => element.isActive === true
-    );
+  const addTaskToArray = (activeProject) => {
     const tasksArray = activeProject.tasks;
-    console.log(tasksArray);
-
     manipulateDOM.refreshTasks();
     manipulateDOM.addTasks(activeProject);
 
@@ -127,10 +119,7 @@ const logic = (() => {
       tasksArray.push(newTask);
       manipulateDOM.refreshTasks();
       manipulateDOM.addTasks(activeProject);
-      addTaskToArray();
-      // manipulateDOM.refreshProjects();
-      // manipulateDOM.addProjects();
-      console.log(tasksArray);
+      addTaskToArray(activeProject);
     });
 
     // BEHAVIOUR FOR PRESSING ENTER
@@ -141,55 +130,34 @@ const logic = (() => {
         tasksArray.push(newTask);
         manipulateDOM.refreshTasks();
         manipulateDOM.addTasks(activeProject);
-        addTaskToArray();
-        // manipulateDOM.refreshProjects();
-        // manipulateDOM.addProjects();
+        addTaskToArray(activeProject);
         taskInput.value = null;
-        console.log(tasksArray);
       }
     });
-
-    // const projects = document.querySelectorAll(".project");
-    // projects.forEach((element) => {
-    //   element.addEventListener(
-    //     "click",
-    //     () => {
-    //       addTaskToArray();
-    //     },
-    //     { once: true }
-    //   );
-    // });
   };
 
   const removeTaskFromArray = (index) => {
+    // FIND ACTIVE PROJECT
     const activeProject = projectsArray.find(
       (element) => element.isActive === true
     );
     const tasksArray = activeProject.tasks;
-    console.log(tasksArray);
-
-    const deleteIcon = document.getElementById("deleteProject");
+    const deleteIcon = document.getElementById("deleteIcon");
     deleteIcon.addEventListener("click", (e) => {
       e.stopPropagation();
-      // if (projectsArray[index].isActive) {
-      //   projectsArray.forEach((element) => {
-      //     element.isActive = false;
-      //   });
-      // }
       tasksArray.splice(index, 1);
       manipulateDOM.refreshTasks();
       manipulateDOM.addTasks(activeProject);
-      // manipulateDOM.noActiveProjectsCard();
-      addTaskToArray();
+      addTaskToArray(activeProject);
     });
   };
   return {
     addProjectToArray,
     removeProjectFromArray,
-    projectMakeActive,
-    addSampleProject,
+    activateProjectSelection,
     addTaskToArray,
     removeTaskFromArray,
+    findActiveProject,
   };
 })();
 
